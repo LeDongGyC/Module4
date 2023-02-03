@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Sandwich Condiments</h1>
-<form action="/sandwich/save" method="post">
+<form action="/sandwich/save1" method="post">
     <input type="checkbox" name="condiment" value="Lettuce">Lettuce
     <input type="checkbox" name="condiment" value="Tomato">Tomato
     <input type="checkbox" name="condiment" value="Mustard">Mustard
