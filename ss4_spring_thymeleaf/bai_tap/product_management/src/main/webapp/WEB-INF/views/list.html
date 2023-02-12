@@ -35,6 +35,9 @@
         <td><a th:href="@{/product/delete/__${product.id}__}">Delete</a></td>
         <td><a th:href="@{/product/detail/__${product.id}__}">Detail</a></td>
     </tr>
+    <tr th:if="${productList.isEmpty()}">
+        <td colspan="9">Danh sách trống</td>
+    </tr>
 </table>
 </body>
 </html>
