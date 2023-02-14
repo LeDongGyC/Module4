@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Create Form</h1>
+<a href="/music/list">Back to list</a>
+<form th:action="@{/music/create}" method="post" th:object="${music}">
+    <table border="1">
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Singer</td>
+            <td><input type="text" th:field="*{singer}"></td>
+        </tr>
+        <tr>
+            <td>Type Of Song</td>
+            <td><input type="text" th:field="*{typeOfSong}"></td>
+        </tr>
+        <tr>
+            <td>Link</td>
+            <td><input type="text" th:field="*{url}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="reset">Reset</button>
+                <button type="">Save</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
