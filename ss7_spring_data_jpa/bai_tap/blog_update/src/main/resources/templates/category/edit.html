@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Edit Form</h1>
+<a href="/category/list">Back to list</a>
+<form th:action="@{/category/edit}" method="post" th:object="${category}">
+    <table border="1">
+        <tr>
+            <td>Id</td>
+            <td><input type="text" th:field="*{id}" th:value="*{id}" readonly></td>
+        </tr>
+        <tr>
+            <td>Name Category</td>
+            <td><input type="text" th:field="*{name}" th:value="*{name}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="reset">Reset</button>
+                <button type="">Update</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

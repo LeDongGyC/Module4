@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>List Music</h1>
+<a href="/category/create">Add new</a>
+<table border="1">
+    <tr>
+        <th>STT</th>
+        <th>ID</th>
+        <th>Name Category</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Detail</th>
+    </tr>
+    <tr th:each="cate,row:${cateList}">
+        <td type="text" th:text="${row.count}"></td>
+        <td type="text" th:text="${cate.id}"></td>
+        <td type="text" th:text="${cate.name}"></td>
+        <td><a th:href="@{/category/edit/__${cate.id}__}">Edit</a></td>
+        <td><a th:href="@{/category/delete/__${cate.id}__}">Delete</a></td>
+        <td><a th:href="@{/category/detail/__${cate.id}__}">Detail</a></td>
+    </tr>
+    <tr th:if="${cateList.isEmpty()}">
+        <td colspan="6">Danh sách trống</td>
+    </tr>
+</table>
+</body>
+</html>
