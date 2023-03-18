@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<form action="">
+    <input type="text" id="searchName" placeholder="Nhập tên tìm kiếm">
+    <button onclick="search()">Search</button>
+</form>
+<h1>Danh sách blog</h1>
+<table id="table" border="1">
+    <thead>
+    <tr>
+        <th>Stt</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Date Update</th>
+        <th>Content</th>
+        <th>Description</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<button class="btn btn-secondary" role="button"
+        onclick="xemThem()">Xem thêm</button>
+</body>
+<script>
+    function xemThem(){
+        display();
+    }
+    display();
+    function display(){
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            dataType:"json",
+            //tên API
+            url: "http://localhost:8080/api/blog/quantity",
+            success: function (data) {
+                console.log(data);
+                let content ="";
+                for(let i=0; i<data.length;i++){
+                    content +='  <tr>\n' +
+                        '<td>'+(i+1)+'</td>\n' +
+                        '<td>'+data[i].id+'</td>\n' +
+                        '<td>'+data[i].nameBlog+'</td>\n' +
+                        '<td>'+data[i].author+'</td>\n' +
+                        '<td>'+data[i].dateUpdate+'</td>\n' +
+                        '<td>'+data[i].content+'</td>\n' +
+                        '<td>'+data[i].description+'</td>\n' +
+                        '<td>'+data[i].category.name+'</td>\n' +
+                        '</tr>'
+                }
+                $("tbody").html(content);
+            }
+        });
+    }
+    // function display(page){
+    //     $.ajax({
+    //         contentType: 'application/json',
+    //         type: "GET",
+    //         dataType:"json",
+    //         //tên API
+    //         url: "http://localhost:8080/api/blog/page?page="+ page,
+    //         success: function (data) {
+    //             console.log(data);
+    //             // let content ="";
+    //             let jsonData = data.content
+    //             let list = $("tbody")
+    //             for(let i=0; i<data.length;i++){
+    //                 // content +='  <tr>\n' +
+    //                 //     '<td>'+(i+1)+'</td>\n' +
+    //                 //     '<td>'+data[i].id+'</td>\n' +
+    //                 //     '<td>'+data[i].nameBlog+'</td>\n' +
+    //                 //     '<td>'+data[i].author+'</td>\n' +
+    //                 //     '<td>'+data[i].dateUpdate+'</td>\n' +
+    //                 //     '<td>'+data[i].content+'</td>\n' +
+    //                 //     '<td>'+data[i].description+'</td>\n' +
+    //                 //     '<td>'+data[i].category.name+'</td>\n' +
+    //                 //     '</tr>'
+    //                 let item = jsonData[i];
+    //                 list.append('<li>' + item.title + '</li>');
+    //             }
+    //             // $("tbody").html(content);
+    //             // $.each(jsonPage.content, function(index, item) {
+    //             //     $('tbody').append(`<li>${item.title}</li>`);
+    //             // });
+    //         }
+    //     });
+    // }
+    function search() {
+        let nameSearch = $("#searchName").val();
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            dataType:"json",
+            //tên API
+            url: "http://localhost:8080/api/blog/search/" + nameSearch,
+            success: function (data) {
+                let content ="";
+                for(let i=0; i<data.length;i++){
+                    content +='  <tr>\n' +
+                        '<td>'+(i+1)+'</td>\n' +
+                        '<td>'+data[i].id+'</td>\n' +
+                        '<td>'+data[i].nameBlog+'</td>\n' +
+                        '<td>'+data[i].author+'</td>\n' +
+                        '<td>'+data[i].dateUpdate+'</td>\n' +
+                        '<td>'+data[i].content+'</td>\n' +
+                        '<td>'+data[i].description+'</td>\n' +
+                        '<td>'+data[i].category.name+'</td>\n' +
+                        '</tr>'
+                }
+                $("tbody").html(content);
+
+            }
+        });
+    }
+</script>
+</body>
+</html>
