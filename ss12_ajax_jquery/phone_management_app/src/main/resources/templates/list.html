@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script
+          src="https://code.jquery.com/jquery-3.6.4.js"
+          integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+          crossorigin="anonymous">
+  </script>
+</head>
+<body>
+<form>
+  <table>
+    <tr>
+      <td>Producer:</td>
+      <td><input type="text" id="producer" placeholder="producer"></td>
+    </tr>
+    <tr>
+      <td>Model:</td>
+      <td><input type="text" id="model" placeholder="model"></td>
+    </tr>
+    <tr>
+      <td>Price:</td>
+      <td><input type="text" id="price" placeholder="price"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+    </tr>
+  </table>
+</form>
+<form action="">
+  <input type="text" id="entityIdInput">
+  <button onclick="deleteEntity()">Delete Entity</button>
+</form>
+<h1>Smartphone List</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <td>Producer</td>
+    <td>Model</td>
+    <td>Price</td>
+  </tr>
+  </thead>
+  <tbody id="body">
+  </tbody>
+</table>
+</body>
+<script>
+  display();
+  function display(){
+    $.ajax({
+      contentType: 'application/json',
+      type: "GET",
+      dataType:"json",
+      //tên API
+      url: 'http://localhost:8080/api/phone',
+      success: function (data) {
+        console.log(data);
+        let content ="";
+        for(let i=0; i<data.length;i++){
+          content +='  <tr>\n' +
+                  '<td>'+data[i].producer+'</td>\n' +
+                  '<td>'+data[i].model+'</td>\n' +
+                  '<td>'+data[i].price+'</td>\n' +
+                  '</tr>'
+        }
+        $("#body").html(content);
+      }
+    });
+  }
+  function addNewSmartPhone() {
+    let producer = $('#producer').val();
+    let model = $('#model').val();
+    let price = $('#price').val();
+    console.log(producer)
+    let newSmartphone = {
+      producer: producer,
+      model: model,
+      price: price
+    };
+    $.ajax({
+      contentType: 'application/json;',
+      dataType: 'json',
+      type: 'POST',
+      url: 'http://localhost:8080/api/phone',
+      data: JSON.stringify(newSmartphone),
+      success: function () {
+      },
+      complete: function () {
+        display();
+      }
+    });
+  }
+  function deleteEntity() {
+    let entityId = $("#entityIdInput").val();
+    console.log(entityId);
+    $.ajax({
+      contentType: 'application/json',
+      type: "DELETE",
+      dataType:"json",
+      url: "/api/phone/delete/" + entityId,
+      success: function() {
+        alert("Entity deleted successfully!");
+        // Reload page or update UI as needed
+      },
+      error: function() {
+        alert("Error deleting entity!");
+      }
+      // success: function () {
+      // },
+      // complete: function () {
+      //     display();
+      // }
+    });
+  }
+
+</script>
+</html>
